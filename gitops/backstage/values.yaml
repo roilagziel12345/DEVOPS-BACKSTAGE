@@ -49,6 +49,9 @@ backstage:
               origin: http://localhost:7007
               methods: [GET, HEAD, PATCH, POST, PUT, DELETE]
               credentials: true
+            reading:
+              allow:
+                - host: raw.githubusercontent.com
 
           auth:
             environment: development
