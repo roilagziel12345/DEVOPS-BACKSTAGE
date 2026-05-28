@@ -440,7 +440,7 @@
             <h2>ArgoCD<br />deployments</h2>
             <div class="card-actions">
               <span class="chip">ArgoCD</span>
-              <a class="open" href="http://localhost:8080" target="_blank" rel="noreferrer">Open ArgoCD</a>
+              <a class="open" href="http://localhost:8081" target="_blank" rel="noreferrer">Open ArgoCD</a>
             </div>
           </header>
           <div class="list" id="argocd-list">
@@ -593,7 +593,7 @@ This GitOps repo mounts a local dashboard because the image source is not presen
               <div style="display:flex; gap:10px; align-items:center; flex-wrap:wrap; justify-content:flex-end">
                 <div class="state ${stateTone}"><span class="dot"></span>${sync}</div>
                 <button class="sync" data-app="${name}">Sync</button>
-                <a class="open" href="http://localhost:8080/applications/${encodeURIComponent(name)}" target="_blank" rel="noreferrer">Open</a>
+                <a class="open" href="http://localhost:8081/applications/${encodeURIComponent(name)}" target="_blank" rel="noreferrer">Open</a>
               </div>
             </div>
           `;
