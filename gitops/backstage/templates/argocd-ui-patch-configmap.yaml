@@ -1,0 +1,11 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: backstage-argocd-ui-patch
+  labels:
+    app.kubernetes.io/name: backstage-argocd-ui-patch
+    app.kubernetes.io/part-of: backstage
+data:
+  main.31f6b62e.js: |
+{{ .Files.Get "files/main.31f6b62e.js" | nindent 4 }}
+

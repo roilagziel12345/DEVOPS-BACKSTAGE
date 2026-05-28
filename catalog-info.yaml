@@ -14,7 +14,7 @@ metadata:
   name: backstage-kind
   description: Local Backstage deployment managed by ArgoCD on KIND
   annotations:
-    argocd/app-name: backstage
+    argocd/project-name: default
     argocd/proxy-url: /argocd/api
 spec:
   type: website

@@ -14,6 +14,17 @@ backstage:
     extraEnvVarsSecrets:
       - backstage-argocd-token
 
+    extraVolumes:
+      - name: backstage-argocd-ui-patch
+        configMap:
+          name: backstage-argocd-ui-patch
+
+    extraVolumeMounts:
+      - name: backstage-argocd-ui-patch
+        mountPath: /app/packages/app/dist/static/main.31f6b62e.js
+        subPath: main.31f6b62e.js
+        readOnly: true
+
     extraAppConfig:
       - filename: app-config.kind.yaml
         configMapRef: backstage-app-config
