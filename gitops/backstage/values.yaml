@@ -75,7 +75,7 @@ backstage:
               - allow: [Component, System, API, Resource, Location, User, Group]
             locations:
               - type: url
-                target: https://raw.githubusercontent.com/roilagziel12345/DEVOPS-BACKSTAGE/main/catalog-info.yaml
+                target: https://raw.githubusercontent.com/roilagziel12345/DEVOPS-BACKSTAGE/9f08bf9f2d653213ec521af9b9c16966a44d53e3/catalog-info.yaml
                 rules:
                   - allow: [Component, User]
 
