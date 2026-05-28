@@ -1,0 +1,66 @@
+backstage:
+  ingress:
+    enabled: false
+
+  backstage:
+    replicas: 1
+
+    image:
+      registry: ""
+      repository: my-backstage-app
+      tag: latest
+      pullPolicy: IfNotPresent
+
+    extraEnvVarsSecrets:
+      - backstage-argocd-token
+
+    extraAppConfig:
+      - filename: app-config.kind.yaml
+        configMapRef: backstage-app-config
+
+  postgresql:
+    enabled: true
+    auth:
+      username: backstage
+      password: backstage
+      database: backstage
+
+  extraDeploy:
+    - apiVersion: v1
+      kind: ConfigMap
+      metadata:
+        name: backstage-app-config
+      data:
+        app-config.kind.yaml: |
+          app:
+            baseUrl: http://localhost:7007
+
+          backend:
+            baseUrl: http://localhost:7007
+            listen:
+              port: 7007
+              host: 0.0.0.0
+            cors:
+              origin: http://localhost:7007
+              methods: [GET, HEAD, PATCH, POST, PUT, DELETE]
+              credentials: true
+
+          argocd:
+            username: backstage
+            appLocatorMethods:
+              - type: config
+                instances:
+                  - name: main
+                    url: https://argocd-server.argocd.svc.cluster.local
+                    token: ${ARGOCD_AUTH_TOKEN}
+                    insecureSkipVerify: true
+
+          proxy:
+            endpoints:
+              '/argocd/api':
+                target: https://argocd-server.argocd.svc.cluster.local/api/v1/
+                changeOrigin: true
+                secure: false
+                headers:
+                  Authorization: Bearer ${ARGOCD_AUTH_TOKEN}
+
