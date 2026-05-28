@@ -9,7 +9,7 @@ backstage:
       registry: ""
       repository: my-backstage-app
       tag: latest
-      pullPolicy: Never
+      pullPolicy: IfNotPresent
 
     extraEnvVarsSecrets:
       - backstage-argocd-token
