@@ -1,0 +1,19 @@
+builds:
+  - service: payment-service
+    branch: main
+    trigger: push
+    build: 214
+    status: passed
+  - service: auth-service
+    branch: feature/oauth2
+    pullRequest: 88
+    build: 97
+    status: running
+  - service: notification-svc
+    branch: main
+    build: 53
+    status: failed
+  - service: api-gateway
+    branch: release/v2.4
+    build: 312
+    status: passed

@@ -1,0 +1,589 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Backstage Platform Dashboard</title>
+  <style>
+    :root {
+      --bg: #20211f;
+      --panel: #2b2c29;
+      --panel-2: #32332f;
+      --line: #4b4d49;
+      --text: #f2f0ea;
+      --muted: #b7b4aa;
+      --blue: #74a7ff;
+      --green: #22d96b;
+      --red: #ff4e4e;
+      --yellow: #ffb300;
+      --cyan: #28d5c8;
+      --purple: #c33ec5;
+      --orange: #dd5b18;
+    }
+
+    * { box-sizing: border-box; }
+
+    body {
+      margin: 0;
+      background: var(--bg);
+      color: var(--text);
+      font-family: Inter, Segoe UI, Roboto, Arial, sans-serif;
+      line-height: 1.25;
+    }
+
+    .shell {
+      display: grid;
+      grid-template-columns: 286px 1fr;
+      min-height: 100vh;
+      max-width: 1200px;
+      margin: 0 auto;
+      border-left: 1px solid #3d3f3a;
+      border-right: 1px solid #3d3f3a;
+    }
+
+    aside {
+      background: #282a27;
+      border-right: 1px solid #484a45;
+      padding: 24px 12px;
+    }
+
+    .brand {
+      display: grid;
+      grid-template-columns: 42px 1fr;
+      gap: 12px;
+      align-items: center;
+      padding: 0 12px 28px;
+      border-bottom: 1px solid #42443f;
+      margin: 0 -12px 18px;
+    }
+
+    .logo {
+      display: grid;
+      place-items: center;
+      width: 34px;
+      height: 34px;
+      border-radius: 6px;
+      background: #2f69f0;
+      font-weight: 800;
+    }
+
+    .brand strong { display: block; font-size: 18px; }
+    .brand span { color: var(--muted); font-size: 14px; }
+
+    .section {
+      color: var(--muted);
+      font-size: 14px;
+      letter-spacing: .04em;
+      margin: 20px 0 8px;
+      padding-left: 2px;
+      text-transform: uppercase;
+    }
+
+    .nav {
+      display: grid;
+      gap: 4px;
+    }
+
+    .nav a {
+      display: grid;
+      grid-template-columns: 24px 1fr;
+      gap: 12px;
+      align-items: center;
+      padding: 10px 14px;
+      border-radius: 8px;
+      color: #dedbd0;
+      text-decoration: none;
+      font-size: 18px;
+    }
+
+    .nav a.active {
+      background: #284a78;
+      color: #9fc4ff;
+    }
+
+    main {
+      min-width: 0;
+      background: #22231f;
+    }
+
+    .topbar {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+      padding: 14px 28px;
+      border-bottom: 1px solid #494b45;
+      background: #2a2b28;
+    }
+
+    .crumb {
+      color: #c8c5bc;
+      font-size: 18px;
+      font-weight: 700;
+    }
+
+    .crumb strong {
+      color: var(--text);
+      display: block;
+      font-size: 22px;
+    }
+
+    .badges {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+      align-items: center;
+    }
+
+    .badge {
+      min-width: 118px;
+      border-radius: 26px;
+      padding: 8px 16px;
+      background: #1f5a17;
+      color: #8def79;
+      font-weight: 700;
+    }
+
+    .badge.warn {
+      background: #604a05;
+      color: #ffc850;
+    }
+
+    .team {
+      border: 1px solid #5a5c56;
+      border-radius: 28px;
+      padding: 8px 16px;
+      color: #d8d5cb;
+      min-width: 142px;
+    }
+
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(280px, 1fr));
+      gap: 20px;
+      padding: 24px 28px 36px;
+    }
+
+    .card {
+      background: var(--panel);
+      border: 1px solid var(--line);
+      border-radius: 12px;
+      box-shadow: inset 0 0 0 1px rgba(255,255,255,.03);
+      padding: 20px;
+      min-height: 260px;
+    }
+
+    .card header {
+      display: flex;
+      justify-content: space-between;
+      align-items: start;
+      gap: 12px;
+      margin-bottom: 18px;
+      color: #d0ccc2;
+    }
+
+    .card h2 {
+      margin: 0;
+      font-size: 20px;
+      line-height: 1.05;
+    }
+
+    .chip {
+      border-radius: 5px;
+      padding: 4px 10px;
+      background: rgba(221, 91, 24, .22);
+      color: var(--orange);
+      font-weight: 800;
+      font-size: 14px;
+    }
+
+    .chip.sonar { background: rgba(40, 213, 200, .14); color: var(--cyan); }
+    .chip.repo { background: rgba(195, 62, 197, .14); color: var(--purple); }
+
+    .list {
+      display: grid;
+    }
+
+    .row {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) auto;
+      gap: 14px;
+      align-items: center;
+      padding: 10px 0;
+      border-bottom: 1px solid #464843;
+    }
+
+    .row:last-child { border-bottom: 0; }
+
+    .name {
+      color: var(--text);
+      font-size: 18px;
+      font-weight: 800;
+      overflow-wrap: anywhere;
+    }
+
+    .sub {
+      color: var(--muted);
+      font-size: 15px;
+    }
+
+    .state {
+      display: flex;
+      gap: 8px;
+      align-items: center;
+      color: var(--green);
+      font-weight: 800;
+      white-space: nowrap;
+    }
+
+    .state.warn { color: var(--yellow); }
+    .state.bad { color: var(--red); }
+    .dot {
+      width: 10px;
+      height: 10px;
+      border-radius: 50%;
+      background: currentColor;
+    }
+
+    button.sync {
+      border: 1px solid #7fa9ff;
+      color: #b9d2ff;
+      background: rgba(48, 93, 170, .25);
+      border-radius: 7px;
+      padding: 7px 12px;
+      font-weight: 800;
+      cursor: pointer;
+    }
+
+    button.sync:disabled {
+      opacity: .55;
+      cursor: wait;
+    }
+
+    .repo-line {
+      display: grid;
+      grid-template-columns: 1fr auto auto auto;
+      gap: 14px;
+      align-items: center;
+      padding: 12px 0;
+      border-bottom: 1px solid #464843;
+    }
+
+    .pill {
+      border-radius: 20px;
+      padding: 8px 14px;
+      background: #175911;
+      color: #96f070;
+      font-weight: 800;
+    }
+
+    .pill.warn {
+      background: #6b5408;
+      color: #ffc543;
+    }
+
+    .metrics {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(120px, 1fr));
+      gap: 12px;
+    }
+
+    .metric {
+      background: #242521;
+      border-radius: 8px;
+      padding: 14px;
+      min-height: 74px;
+    }
+
+    .metric span {
+      color: var(--muted);
+      display: block;
+      font-size: 14px;
+      margin-bottom: 6px;
+    }
+
+    .metric strong {
+      color: var(--green);
+      font-size: 24px;
+    }
+
+    .metric .warn-text { color: var(--yellow); }
+
+    .structure {
+      grid-column: 1 / -1;
+      display: grid;
+      grid-template-columns: repeat(4, minmax(140px, 1fr));
+      gap: 12px;
+    }
+
+    .folder {
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      padding: 14px;
+      background: var(--panel-2);
+    }
+
+    .folder strong { display: block; font-size: 18px; }
+    .folder span { display: block; color: var(--muted); margin-top: 4px; }
+    .secret { color: #ff7777; }
+    .config { color: #72dcff; }
+    .plugin { color: #d68cff; }
+    .code { color: #ffd36e; }
+
+    .file-callout {
+      grid-column: 1 / -1;
+      background: #151614;
+      border: 1px solid #4b4d49;
+      border-radius: 8px;
+      padding: 16px;
+      font-family: Consolas, Monaco, monospace;
+      color: #dcd8ce;
+      overflow: auto;
+    }
+
+    .toast {
+      position: fixed;
+      right: 18px;
+      bottom: 18px;
+      max-width: 420px;
+      border-radius: 8px;
+      background: #151614;
+      border: 1px solid #5a5c56;
+      color: var(--text);
+      padding: 12px 14px;
+      box-shadow: 0 12px 36px rgba(0,0,0,.35);
+      display: none;
+    }
+
+    @media (max-width: 860px) {
+      .shell { grid-template-columns: 1fr; }
+      aside { display: none; }
+      .grid, .structure { grid-template-columns: 1fr; }
+      .topbar { align-items: flex-start; flex-direction: column; }
+    }
+  </style>
+</head>
+<body>
+  <div class="shell">
+    <aside>
+      <div class="brand">
+        <div class="logo">BS</div>
+        <div><strong>Backstage</strong><span>On-Prem · v1.28</span></div>
+      </div>
+
+      <div class="section">Catalog</div>
+      <nav class="nav">
+        <a class="active" href="/platform-dashboard.html">▦ <span>Overview</span></a>
+        <a href="/catalog">◇ <span>Services</span></a>
+        <a href="/catalog">⬡ <span>Resources</span></a>
+      </nav>
+
+      <div class="section">CI/CD</div>
+      <nav class="nav">
+        <a href="#jenkins">⚙ <span>Jenkins</span></a>
+        <a href="#argocd">↻ <span>ArgoCD</span></a>
+      </nav>
+
+      <div class="section">Quality</div>
+      <nav class="nav">
+        <a href="#sonar">⬡ <span>SonarQube</span></a>
+        <a href="#repos">⌘ <span>Repositories</span></a>
+      </nav>
+
+      <div class="section">Ops</div>
+      <nav class="nav">
+        <a href="#health">♡ <span>Health</span></a>
+        <a href="#alerts">♧ <span>Alerts</span></a>
+      </nav>
+    </aside>
+
+    <main>
+      <div class="topbar">
+        <div class="crumb">Catalog / <strong>payment-service</strong></div>
+        <div class="badges">
+          <div class="badge">prod<br />healthy</div>
+          <div class="badge warn">staging<br />degraded</div>
+          <div class="team">Team:<br />Payments</div>
+        </div>
+      </div>
+
+      <section class="grid">
+        <article class="card" id="jenkins">
+          <header>
+            <h2>⚙ Jenkins CI<br />builds</h2>
+            <span class="chip">Jenkins</span>
+          </header>
+          <div class="list" id="jenkins-list"></div>
+        </article>
+
+        <article class="card" id="argocd">
+          <header>
+            <h2>↻ ArgoCD<br />deployments</h2>
+            <span class="chip">ArgoCD</span>
+          </header>
+          <div class="list" id="argocd-list">
+            <div class="sub">Loading ArgoCD applications from Backstage proxy...</div>
+          </div>
+        </article>
+
+        <article class="card" id="repos">
+          <header>
+            <h2>⌘ Repositories</h2>
+            <span class="chip repo">GitHub</span>
+          </header>
+          <div class="list" id="repo-list"></div>
+        </article>
+
+        <article class="card" id="sonar">
+          <header>
+            <h2>⬡ SonarQube</h2>
+            <span class="chip sonar">Sonar</span>
+          </header>
+          <div class="metrics">
+            <div class="metric"><span>Quality gate</span><strong>Passed ✓</strong></div>
+            <div class="metric"><span>Coverage</span><strong class="warn-text">74%</strong></div>
+            <div class="metric"><span>Bugs</span><strong>2</strong></div>
+            <div class="metric"><span>Vulnerabilities</span><strong>0</strong></div>
+            <div class="metric"><span>Code smells</span><strong class="warn-text">19</strong></div>
+            <div class="metric"><span>Tech debt</span><strong>2d 4h</strong></div>
+          </div>
+        </article>
+
+        <section class="structure">
+          <div class="folder"><strong class="secret">secret</strong><span>never commit</span></div>
+          <div class="folder"><strong class="config">config</strong><span>safe to commit</span></div>
+          <div class="folder"><strong class="plugin">plugin</strong><span>where you wire plugins</span></div>
+          <div class="folder"><strong class="code">deploy</strong><span>docker / k8s</span></div>
+        </section>
+
+        <pre class="file-callout">/packages/app/src/EntityPage.tsx
+The frontend plugin layout lives here in a full Backstage app.
+This GitOps repo mounts a local dashboard because the image source is not present in this repository.</pre>
+      </section>
+    </main>
+  </div>
+  <div class="toast" id="toast"></div>
+
+  <script>
+    const toast = document.getElementById('toast');
+    const showToast = message => {
+      toast.textContent = message;
+      toast.style.display = 'block';
+      clearTimeout(window.__toastTimer);
+      window.__toastTimer = setTimeout(() => toast.style.display = 'none', 4200);
+    };
+
+    const jenkins = [
+      ['payment-service', 'main · triggered by push', '#214 passed', 'ok'],
+      ['auth-service', 'feature/oauth2 · PR #88', '#97 running', 'warn'],
+      ['notification-svc', 'main · 12m ago', '#53 failed', 'bad'],
+      ['api-gateway', 'release/v2.4 · 1h ago', '#312 passed', 'ok'],
+    ];
+
+    const repos = [
+      ['payment-service', 'Java · 847 commits', '6 branches', '2 open PRs', 'clean'],
+      ['auth-service', 'Go · 412 commits', '4 branches', '5 open PRs', '1 conflict'],
+      ['notification-svc', 'Node.js · 218 commits', '3 branches', '0 open PRs', 'clean'],
+    ];
+
+    document.getElementById('jenkins-list').innerHTML = jenkins.map(([name, sub, status, tone]) => `
+      <div class="row">
+        <div><div class="name">${name}</div><div class="sub">${sub}</div></div>
+        <div class="state ${tone === 'bad' ? 'bad' : tone === 'warn' ? 'warn' : ''}"><span class="dot"></span>${status}</div>
+      </div>
+    `).join('');
+
+    document.getElementById('repo-list').innerHTML = repos.map(([name, sub, branches, prs, health]) => `
+      <div class="repo-line">
+        <div><div class="name" style="color:var(--blue)">${name}</div><div class="sub">${sub}</div></div>
+        <div class="sub">⌘ ${branches}</div>
+        <div class="sub">⌘ ${prs}</div>
+        <div class="pill ${health.includes('conflict') ? 'warn' : ''}">${health}</div>
+      </div>
+    `).join('');
+
+    async function token() {
+      const response = await fetch('/api/auth/guest/refresh', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: '{}',
+      });
+      const payload = await response.json();
+      return payload && payload.backstageIdentity && payload.backstageIdentity.token;
+    }
+
+    async function argocdFetch(path, options = {}) {
+      const bearer = await token();
+      return fetch(`/api/proxy/argocd/api${path}`, {
+        ...options,
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${bearer}`,
+          ...(options.headers || {}),
+        },
+      });
+    }
+
+    function tone(sync, health) {
+      if (health === 'Degraded' || sync === 'OutOfSync') return 'bad';
+      if (sync !== 'Synced') return 'warn';
+      return '';
+    }
+
+    async function syncApp(name, button) {
+      button.disabled = true;
+      button.textContent = 'Syncing';
+      try {
+        const response = await argocdFetch(`/applications/${encodeURIComponent(name)}/sync`, {
+          method: 'POST',
+          body: '{}',
+        });
+        if (!response.ok) throw new Error(await response.text());
+        showToast(`ArgoCD sync started for ${name}`);
+        await loadArgo();
+      } catch (error) {
+        showToast(`Sync failed for ${name}: ${error.message}`);
+      } finally {
+        button.disabled = false;
+        button.textContent = 'Sync';
+      }
+    }
+
+    async function loadArgo() {
+      const mount = document.getElementById('argocd-list');
+      try {
+        const response = await argocdFetch('/applications?projects=default');
+        if (!response.ok) throw new Error(await response.text());
+        const payload = await response.json();
+        const items = Array.isArray(payload.items) ? payload.items : [];
+        mount.innerHTML = items.map(app => {
+          const name = app.metadata && app.metadata.name || 'unknown';
+          const sync = app.status && app.status.sync && app.status.sync.status || 'Unknown';
+          const health = app.status && app.status.health && app.status.health.status || 'Unknown';
+          const version = app.status && app.status.sync && app.status.sync.revision ? app.status.sync.revision.slice(0, 7) : 'local';
+          const stateTone = tone(sync, health);
+          return `
+            <div class="row">
+              <div>
+                <div class="name">${name}</div>
+                <div class="sub">${health.toLowerCase()} · ${version}</div>
+              </div>
+              <div style="display:flex; gap:10px; align-items:center">
+                <div class="state ${stateTone}"><span class="dot"></span>${sync}</div>
+                <button class="sync" data-app="${name}">Sync</button>
+              </div>
+            </div>
+          `;
+        }).join('');
+        mount.querySelectorAll('button.sync').forEach(button => {
+          button.addEventListener('click', () => syncApp(button.dataset.app, button));
+        });
+      } catch (error) {
+        mount.innerHTML = `<div class="sub">Could not load ArgoCD apps: ${error.message}</div>`;
+      }
+    }
+
+    loadArgo();
+  </script>
+</body>
+</html>

@@ -1,0 +1,19 @@
+repositories:
+  - name: payment-service
+    language: Java
+    commits: 847
+    branches: 6
+    openPullRequests: 2
+    status: clean
+  - name: auth-service
+    language: Go
+    commits: 412
+    branches: 4
+    openPullRequests: 5
+    status: 1 conflict
+  - name: notification-svc
+    language: Node.js
+    commits: 218
+    branches: 3
+    openPullRequests: 0
+    status: clean

@@ -1,0 +1,7 @@
+project: payment-service
+qualityGate: passed
+coverage: 74
+bugs: 2
+vulnerabilities: 0
+codeSmells: 19
+techDebt: 2d 4h
