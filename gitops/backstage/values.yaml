@@ -37,6 +37,7 @@ backstage:
       data:
         app-config.kind.yaml: |
           app:
+            title: Backstage
             baseUrl: http://localhost:7007
 
           backend:
