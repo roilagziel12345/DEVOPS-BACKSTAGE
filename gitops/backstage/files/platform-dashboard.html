@@ -1,4 +1,4 @@
-<!doctype html>
+﻿<!doctype html>
 <html lang="en">
 <head>
   <meta charset="utf-8" />
@@ -368,32 +368,32 @@
     <aside>
       <div class="brand">
         <div class="logo">BS</div>
-        <div><strong>Backstage</strong><span>On-Prem · v1.28</span></div>
+        <div><strong>Backstage</strong><span>On-Prem - v1.28</span></div>
       </div>
 
       <div class="section">Catalog</div>
       <nav class="nav">
-        <a class="active" href="/platform-dashboard.html">▦ <span>Overview</span></a>
-        <a href="/catalog">◇ <span>Services</span></a>
-        <a href="/catalog">⬡ <span>Resources</span></a>
+        <a class="active" href="/platform-dashboard.html">[ ] <span>Overview</span></a>
+        <a href="/catalog">&lt;&gt; <span>Services</span></a>
+        <a href="/catalog">O <span>Resources</span></a>
       </nav>
 
       <div class="section">CI/CD</div>
       <nav class="nav">
-        <a href="#jenkins">⚙ <span>Jenkins</span></a>
-        <a href="#argocd">↻ <span>ArgoCD</span></a>
+        <a href="#jenkins">CI <span>Jenkins</span></a>
+        <a href="#argocd">CD <span>ArgoCD</span></a>
       </nav>
 
       <div class="section">Quality</div>
       <nav class="nav">
-        <a href="#sonar">⬡ <span>SonarQube</span></a>
-        <a href="#repos">⌘ <span>Repositories</span></a>
+        <a href="#sonar">Q <span>SonarQube</span></a>
+        <a href="#repos">Git <span>Repositories</span></a>
       </nav>
 
       <div class="section">Ops</div>
       <nav class="nav">
-        <a href="#health">♡ <span>Health</span></a>
-        <a href="#alerts">♧ <span>Alerts</span></a>
+        <a href="#health">OK <span>Health</span></a>
+        <a href="#alerts">! <span>Alerts</span></a>
       </nav>
     </aside>
 
@@ -410,7 +410,7 @@
       <section class="grid">
         <article class="card" id="jenkins">
           <header>
-            <h2>⚙ Jenkins CI<br />builds</h2>
+            <h2>Jenkins CI<br />builds</h2>
             <span class="chip">Jenkins</span>
           </header>
           <div class="list" id="jenkins-list"></div>
@@ -418,7 +418,7 @@
 
         <article class="card" id="argocd">
           <header>
-            <h2>↻ ArgoCD<br />deployments</h2>
+            <h2>ArgoCD<br />deployments</h2>
             <span class="chip">ArgoCD</span>
           </header>
           <div class="list" id="argocd-list">
@@ -428,7 +428,7 @@
 
         <article class="card" id="repos">
           <header>
-            <h2>⌘ Repositories</h2>
+            <h2>Repositories</h2>
             <span class="chip repo">GitHub</span>
           </header>
           <div class="list" id="repo-list"></div>
@@ -436,11 +436,11 @@
 
         <article class="card" id="sonar">
           <header>
-            <h2>⬡ SonarQube</h2>
+            <h2>SonarQube</h2>
             <span class="chip sonar">Sonar</span>
           </header>
           <div class="metrics">
-            <div class="metric"><span>Quality gate</span><strong>Passed ✓</strong></div>
+            <div class="metric"><span>Quality gate</span><strong>Passed OK</strong></div>
             <div class="metric"><span>Coverage</span><strong class="warn-text">74%</strong></div>
             <div class="metric"><span>Bugs</span><strong>2</strong></div>
             <div class="metric"><span>Vulnerabilities</span><strong>0</strong></div>
@@ -474,16 +474,16 @@ This GitOps repo mounts a local dashboard because the image source is not presen
     };
 
     const jenkins = [
-      ['payment-service', 'main · triggered by push', '#214 passed', 'ok'],
-      ['auth-service', 'feature/oauth2 · PR #88', '#97 running', 'warn'],
-      ['notification-svc', 'main · 12m ago', '#53 failed', 'bad'],
-      ['api-gateway', 'release/v2.4 · 1h ago', '#312 passed', 'ok'],
+      ['payment-service', 'main - triggered by push', '#214 passed', 'ok'],
+      ['auth-service', 'feature/oauth2 - PR #88', '#97 running', 'warn'],
+      ['notification-svc', 'main - 12m ago', '#53 failed', 'bad'],
+      ['api-gateway', 'release/v2.4 - 1h ago', '#312 passed', 'ok'],
     ];
 
     const repos = [
-      ['payment-service', 'Java · 847 commits', '6 branches', '2 open PRs', 'clean'],
-      ['auth-service', 'Go · 412 commits', '4 branches', '5 open PRs', '1 conflict'],
-      ['notification-svc', 'Node.js · 218 commits', '3 branches', '0 open PRs', 'clean'],
+      ['payment-service', 'Java - 847 commits', '6 branches', '2 open PRs', 'clean'],
+      ['auth-service', 'Go - 412 commits', '4 branches', '5 open PRs', '1 conflict'],
+      ['notification-svc', 'Node.js - 218 commits', '3 branches', '0 open PRs', 'clean'],
     ];
 
     document.getElementById('jenkins-list').innerHTML = jenkins.map(([name, sub, status, tone]) => `
@@ -496,8 +496,8 @@ This GitOps repo mounts a local dashboard because the image source is not presen
     document.getElementById('repo-list').innerHTML = repos.map(([name, sub, branches, prs, health]) => `
       <div class="repo-line">
         <div><div class="name" style="color:var(--blue)">${name}</div><div class="sub">${sub}</div></div>
-        <div class="sub">⌘ ${branches}</div>
-        <div class="sub">⌘ ${prs}</div>
+        <div class="sub">${branches}</div>
+        <div class="sub">${prs}</div>
         <div class="pill ${health.includes('conflict') ? 'warn' : ''}">${health}</div>
       </div>
     `).join('');
@@ -566,7 +566,7 @@ This GitOps repo mounts a local dashboard because the image source is not presen
             <div class="row">
               <div>
                 <div class="name">${name}</div>
-                <div class="sub">${health.toLowerCase()} · ${version}</div>
+                <div class="sub">${health.toLowerCase()} - ${version}</div>
               </div>
               <div style="display:flex; gap:10px; align-items:center">
                 <div class="state ${stateTone}"><span class="dot"></span>${sync}</div>
