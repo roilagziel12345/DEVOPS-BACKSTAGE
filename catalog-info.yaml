@@ -1,0 +1,22 @@
+apiVersion: backstage.io/v1alpha1
+kind: User
+metadata:
+  name: guest
+  namespace: development
+spec:
+  profile:
+    displayName: Guest
+  memberOf: []
+---
+apiVersion: backstage.io/v1alpha1
+kind: Component
+metadata:
+  name: backstage-kind
+  description: Local Backstage deployment managed by ArgoCD on KIND
+  annotations:
+    argocd/app-name: backstage
+spec:
+  type: website
+  lifecycle: experimental
+  owner: user:development/guest
+

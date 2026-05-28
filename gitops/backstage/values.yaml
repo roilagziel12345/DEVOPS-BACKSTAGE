@@ -56,6 +56,15 @@ backstage:
               guest:
                 dangerouslyAllowOutsideDevelopment: true
 
+          catalog:
+            rules:
+              - allow: [Component, System, API, Resource, Location, User, Group]
+            locations:
+              - type: url
+                target: https://raw.githubusercontent.com/roilagziel12345/DEVOPS-BACKSTAGE/main/catalog-info.yaml
+                rules:
+                  - allow: [Component, User]
+
           argocd:
             username: backstage
             appLocatorMethods:
