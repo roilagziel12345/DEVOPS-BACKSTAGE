@@ -20,5 +20,5 @@ metadata:
     app.kubernetes.io/part-of: argocd
 data:
   policy.csv: |
+    p, backstage, applications, sync, */*, allow
     g, backstage, role:readonly
-

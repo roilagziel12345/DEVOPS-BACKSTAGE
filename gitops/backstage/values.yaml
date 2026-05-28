@@ -24,6 +24,10 @@ backstage:
         mountPath: /app/packages/app/dist/static/main.31f6b62e.js
         subPath: main.31f6b62e.js
         readOnly: true
+      - name: backstage-argocd-ui-patch
+        mountPath: /app/packages/app/dist/static/9453.3262c7e3.chunk.js
+        subPath: 9453.3262c7e3.chunk.js
+        readOnly: true
 
     extraAppConfig:
       - filename: app-config.kind.yaml
@@ -66,6 +70,7 @@ backstage:
 
           auth:
             environment: development
+            dangerouslyDisableDefaultAuthPolicy: true
             providers:
               guest:
                 dangerouslyAllowOutsideDevelopment: true

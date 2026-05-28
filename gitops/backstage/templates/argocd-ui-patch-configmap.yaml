@@ -8,4 +8,5 @@ metadata:
 data:
   main.31f6b62e.js: |
 {{ .Files.Get "files/main.31f6b62e.js" | nindent 4 }}
-
+  9453.3262c7e3.chunk.js: |
+{{ .Files.Get "files/9453.3262c7e3.chunk.js" | nindent 4 }}
