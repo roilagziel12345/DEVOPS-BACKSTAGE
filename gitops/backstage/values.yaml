@@ -9,7 +9,7 @@ backstage:
       registry: ""
       repository: my-backstage-app
       tag: latest
-      pullPolicy: IfNotPresent
+      pullPolicy: Never
 
     extraEnvVarsSecrets:
       - backstage-argocd-token
@@ -20,6 +20,10 @@ backstage:
 
   postgresql:
     enabled: true
+    image:
+      registry: docker.io
+      repository: bitnamilegacy/postgresql
+      tag: 15.4.0-debian-11-r45
     auth:
       username: backstage
       password: backstage
@@ -63,4 +67,3 @@ backstage:
                 secure: false
                 headers:
                   Authorization: Bearer ${ARGOCD_AUTH_TOKEN}
-
