@@ -5,3 +5,6 @@ bugs: 2
 vulnerabilities: 0
 codeSmells: 19
 techDebt: 2d 4h
+notes:
+  - This file is fake demo data and is safe to commit.
+  - Real SonarQube tokens belong in Kubernetes Secrets, never in Git.

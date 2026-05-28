@@ -17,3 +17,7 @@ builds:
     branch: release/v2.4
     build: 312
     status: passed
+
+notes:
+  - This file is fake demo data and is safe to commit.
+  - Real Jenkins secrets or API tokens belong in Kubernetes Secrets, never in Git.

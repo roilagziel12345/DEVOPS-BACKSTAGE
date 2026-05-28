@@ -182,6 +182,14 @@
       color: #d0ccc2;
     }
 
+    .card-actions {
+      display: flex;
+      gap: 8px;
+      align-items: center;
+      flex-wrap: wrap;
+      justify-content: flex-end;
+    }
+
     .card h2 {
       margin: 0;
       font-size: 20px;
@@ -253,6 +261,17 @@
       padding: 7px 12px;
       font-weight: 800;
       cursor: pointer;
+    }
+
+    a.open {
+      border: 1px solid #62645f;
+      color: #e3e0d6;
+      background: rgba(255,255,255,.04);
+      border-radius: 7px;
+      padding: 7px 12px;
+      font-weight: 800;
+      text-decoration: none;
+      white-space: nowrap;
     }
 
     button.sync:disabled {
@@ -419,7 +438,10 @@
         <article class="card" id="argocd">
           <header>
             <h2>ArgoCD<br />deployments</h2>
-            <span class="chip">ArgoCD</span>
+            <div class="card-actions">
+              <span class="chip">ArgoCD</span>
+              <a class="open" href="http://localhost:8080" target="_blank" rel="noreferrer">Open ArgoCD</a>
+            </div>
           </header>
           <div class="list" id="argocd-list">
             <div class="sub">Loading ArgoCD applications from Backstage proxy...</div>
@@ -552,7 +574,7 @@ This GitOps repo mounts a local dashboard because the image source is not presen
     async function loadArgo() {
       const mount = document.getElementById('argocd-list');
       try {
-        const response = await argocdFetch('/applications?projects=default');
+        const response = await argocdFetch('/applications');
         if (!response.ok) throw new Error(await response.text());
         const payload = await response.json();
         const items = Array.isArray(payload.items) ? payload.items : [];
@@ -568,9 +590,10 @@ This GitOps repo mounts a local dashboard because the image source is not presen
                 <div class="name">${name}</div>
                 <div class="sub">${health.toLowerCase()} - ${version}</div>
               </div>
-              <div style="display:flex; gap:10px; align-items:center">
+              <div style="display:flex; gap:10px; align-items:center; flex-wrap:wrap; justify-content:flex-end">
                 <div class="state ${stateTone}"><span class="dot"></span>${sync}</div>
                 <button class="sync" data-app="${name}">Sync</button>
+                <a class="open" href="http://localhost:8080/applications/${encodeURIComponent(name)}" target="_blank" rel="noreferrer">Open</a>
               </div>
             </div>
           `;
