@@ -15,8 +15,8 @@ metadata:
   description: Local Backstage deployment managed by ArgoCD on KIND
   annotations:
     argocd/app-name: backstage
+    argocd/proxy-url: /argocd/api
 spec:
   type: website
   lifecycle: experimental
   owner: user:development/guest
-

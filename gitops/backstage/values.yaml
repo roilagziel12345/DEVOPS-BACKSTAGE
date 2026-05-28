@@ -69,14 +69,7 @@ backstage:
                   - allow: [Component, User]
 
           argocd:
-            username: backstage
-            appLocatorMethods:
-              - type: config
-                instances:
-                  - name: main
-                    url: https://argocd-server.argocd.svc.cluster.local
-                    token: ${ARGOCD_AUTH_TOKEN}
-                    insecureSkipVerify: true
+            baseUrl: https://argocd-server.argocd.svc.cluster.local
 
           jenkins:
             instances:
