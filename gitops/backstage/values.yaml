@@ -60,6 +60,13 @@ backstage:
                     token: ${ARGOCD_AUTH_TOKEN}
                     insecureSkipVerify: true
 
+          jenkins:
+            instances:
+              - name: default
+                baseUrl: http://jenkins.jenkins.svc.cluster.local:8080
+                username: backstage
+                apiKey: local-kind-placeholder
+
           proxy:
             endpoints:
               '/argocd/api':
