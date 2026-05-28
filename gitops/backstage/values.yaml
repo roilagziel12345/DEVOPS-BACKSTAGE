@@ -50,6 +50,12 @@ backstage:
               methods: [GET, HEAD, PATCH, POST, PUT, DELETE]
               credentials: true
 
+          auth:
+            environment: development
+            providers:
+              guest:
+                dangerouslyAllowOutsideDevelopment: true
+
           argocd:
             username: backstage
             appLocatorMethods:
